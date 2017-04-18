@@ -1,0 +1,166 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/scarney81/pg-hstore">pg-hstore (v2.3.2)</a>
+</h1>
+<h4>An module for serializing and deserializing JSON data in to hstore format</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.pg-hstore">module pg-hstore</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.pg-hstore.pg-hstore">
+            function <span class="apidocSignatureSpan"></span>pg-hstore
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.pg-hstore.toString">
+            function <span class="apidocSignatureSpan">pg-hstore.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.pg-hstore" id="apidoc.module.pg-hstore">module pg-hstore</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.pg-hstore.pg-hstore" id="apidoc.element.pg-hstore.pg-hstore">
+        function <span class="apidocSignatureSpan"></span>pg-hstore
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">pg-hstore = function (options) {
+  options = _.defaults({}, options, { sanitize: false });
+
+  return {
+    stringify: function (data, callback) {
+      var hstore = Object.keys(data).map(function (key) {
+        if (data[key] === null) {
+          return '"'+to_string(key, options.sanitize)+'"=&gt;NULL';
+        } else {
+          return '"'+to_string(key, options.sanitize)+'"=&gt;"'+to_string(data[key], options.sanitize)+'"';
+        }
+      });
+      var joined = hstore.join();
+      if (!callback || callback === null) return joined;
+      callback(joined);
+    },
+
+    parse: function(string, callback) {
+      var result = {},
+      //using [\s\S] to match any character, including line feed and carriage return,
+          r = /(["])(?:\\\1|\\\\|[\s\S])*?\1|NULL/g,
+          matches = string.match(r),
+          i,
+          l,
+          clean = function (value) {
+              // Remove leading double quotes
+              value = value.replace(/^\"|\"$/g, "");
+              // Unescape quotes
+              value = value.replace(/\\"/g, "\"");
+              //Unescape backslashes
+              value = value.replace(/\\\\/g,"\\");
+              //Unescape single quotes
+              value = value.replace(/''/g,"'");
+
+              return value;
+          };
+
+      if(matches) {
+        for (i = 0, l = matches.length; i &lt; l; i+= 2) {
+          var key = clean(matches[i]);
+          var value = matches[i + 1];
+          result[key] = value=="NULL"?null:clean(value);
+        }
+      }
+      if (!callback || callback === null) return result;
+      callback(result);
+    }
+  };
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.pg-hstore.toString" id="apidoc.element.pg-hstore.toString">
+        function <span class="apidocSignatureSpan">pg-hstore.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
