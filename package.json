@@ -1,1 +1,39 @@
-{     "devDependencies": {         "pg-hstore": "*",         "electron-lite": "kaizhu256/node-electron-lite#alpha",         "utility2": "kaizhu256/node-utility2#alpha"     },     "name":"npmdoc-pg-hstore",     "homepage": "https://github.com/npmdoc/node-npmdoc-pg-hstore",     "repository": {         "type": "git",         "url": "https://github.com/npmdoc/node-npmdoc-pg-hstore.git"     },     "scripts": {         "build-ci": "utility2 shReadmeTest build_ci.sh"     },     "version": "0.0.1" }
+{
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "description": "#### api documentation for  [pg-hstore (v2.3.2)](https://github.com/scarney81/pg-hstore)  [![npm package](https://img.shields.io/npm/v/npmdoc-pg-hstore.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-pg-hstore) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-pg-hstore.svg)](https://travis-ci.org/npmdoc/node-npmdoc-pg-hstore)",
+    "devDependencies": {
+        "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "pg-hstore": "*",
+        "utility2": "kaizhu256/node-utility2#alpha"
+    },
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-pg-hstore",
+    "keywords": [
+        "documentation",
+        "pg-hstore"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_pg_hstore.js",
+    "name": "npmdoc-pg-hstore",
+    "nameAlias": "npmdoc_pg_hstore",
+    "nameOriginal": "npmdoc-pg-hstore",
+    "os": [
+        "darwin",
+        "linux"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/npmdoc/node-npmdoc-pg-hstore.git"
+    },
+    "scripts": {
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "npm install \"kaizhu256/node-utility2#alpha\" && utility2 shDeployHeroku",
+        "postinstall": "[ ! -f npm_scripts.sh ] || ./npm_scripts.sh postinstall",
+        "start": "PORT=${PORT:-8080} utility2 start test.js",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
+    },
+    "version": "0.0.2"
+}
